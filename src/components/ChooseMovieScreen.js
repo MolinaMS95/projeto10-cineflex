@@ -21,7 +21,7 @@ export default function ChooseMovieScreen() {
     });
   }, []);
 
-  if (error === true) {
+  if (error) {
     return (
       <Body>
         <p>Recarregue a página e tente novamente</p>
@@ -43,8 +43,8 @@ export default function ChooseMovieScreen() {
       <p>Selecione o filme</p>
       <MovieList>
         {movies.map((movie) => (
-          <Link to={`/sessions/${movie.id}`}>
-            <MoviePoster key={movie.id}>
+          <Link key={movie.id} to={`/sessions/${movie.id}`}>
+            <MoviePoster>
               <img src={movie.posterURL} alt={movie.title} />
             </MoviePoster>
           </Link>

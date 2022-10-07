@@ -19,5 +19,7 @@ const Header = styled.header`
   color: #e8833a;
 
   position: fixed;
+  left: 0px;
+  top: 0px;
   z-index: 2;
 `;
