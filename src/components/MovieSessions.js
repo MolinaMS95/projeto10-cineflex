@@ -6,7 +6,7 @@ import errorImg from "../assets/errorImg.gif";
 import axios from "axios";
 import BottomBar from "./BottomBar";
 
-export default function MovieSessions() {
+export default function MovieSessions({ setDay, setHour }) {
   const { idFilm } = useParams();
   const [sessions, setSessions] = useState(null);
   const [error, setError] = useState(false);
@@ -22,6 +22,11 @@ export default function MovieSessions() {
       setError(true);
     });
   }, [url]);
+
+  function setTime(day, hour) {
+    setDay(day);
+    setHour(hour);
+  }
 
   if (error) {
     return (
@@ -44,14 +49,19 @@ export default function MovieSessions() {
       <p>Selecione o horário</p>
       <SessionList>
         {sessions.days.map((day) => (
-          <li key={day.id}>
+          <li key={day.id} data-identifier="session-date">
             <p>
               {day.weekday} - {day.date}
             </p>
             <ul>
               {day.showtimes.map((hour) => (
-                <Link key={hour.id} to={`/seats/${day.id}`}>
-                  <Time>{hour.name}</Time>
+                <Link key={hour.id} to={`/seats/${hour.id}`}>
+                  <Time
+                    data-identifier="hour-minute-btn"
+                    onClick={() => setTime(day.date, hour.name)}
+                  >
+                    {hour.name}
+                  </Time>
                 </Link>
               ))}
             </ul>

@@ -5,7 +5,7 @@ import loading from "../assets/loading.gif";
 import errorImg from "../assets/errorImg.gif";
 import { Link } from "react-router-dom";
 
-export default function ChooseMovieScreen() {
+export default function ChooseMovieScreen({ setMovie }) {
   const [movies, setMovies] = useState(null);
   const [error, setError] = useState(false);
   const url = "https://mock-api.driven.com.br/api/v5/cineflex/movies";
@@ -44,8 +44,12 @@ export default function ChooseMovieScreen() {
       <MovieList>
         {movies.map((movie) => (
           <Link key={movie.id} to={`/sessions/${movie.id}`}>
-            <MoviePoster>
-              <img src={movie.posterURL} alt={movie.title} />
+            <MoviePoster data-identifier="movie-outdoor">
+              <img
+                src={movie.posterURL}
+                alt={movie.title}
+                onClick={() => setMovie(movie.title)}
+              />
             </MoviePoster>
           </Link>
         ))}

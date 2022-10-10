@@ -1,13 +1,16 @@
 import styled from "styled-components";
 
 export default function BottomBar(props) {
-  const { img, title } = props;
+  const { img, title, children } = props;
   return (
     <Footer>
-      <div>
-        <img src={img} alt={title} />
+      <ImgContainer>
+        <img src={img} alt={title} data-identifier="movie-img-preview" />
+      </ImgContainer>
+      <div data-identifier="movie-and-session-infos-preview">
+        <div>{title}</div>
+        <div>{children}</div>
       </div>
-      {title}
     </Footer>
   );
 }
@@ -26,27 +29,27 @@ const Footer = styled.div`
   display: flex;
   align-items: center;
 
-  div {
-    width: 64px;
-    height: 89px;
+  font-family: "Roboto", sans-serif;
+  font-size: 26px;
+  color: #293845;
+`;
 
-    background: #ffffff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 2px;
+const ImgContainer = styled.div`
+  width: 64px;
+  height: 89px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background: #ffffff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
 
-    margin: 0px 14px;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0px 14px;
 
   img {
     width: 48px;
     height: 72px;
   }
-
-  font-family: "Roboto", sans-serif;
-  font-size: 26px;
-  color: #293845;
 `;
