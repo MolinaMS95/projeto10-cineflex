@@ -12,8 +12,8 @@ export default function App() {
   const [day, setDay] = useState(undefined);
   const [hour, setHour] = useState(undefined);
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const [name, setName] = useState(undefined);
-  const [cpf, setCpf] = useState(undefined);
+  const [name, setName] = useState([]);
+  const [cpf, setCpf] = useState([]);
   const [initialPage, setInitialPage] = useState(true);
 
   return (
@@ -51,6 +51,8 @@ export default function App() {
                 selectedSeats={selectedSeats}
                 setSelectedSeats={setSelectedSeats}
                 name={name}
+                setName={setName}
+                setCpf={setCpf}
                 cpf={cpf}
                 setInitialPage={setInitialPage}
               />

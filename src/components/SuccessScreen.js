@@ -9,20 +9,43 @@ export default function SuccessScreen(props) {
     selectedSeats,
     setSelectedSeats,
     name,
+    setName,
     cpf,
+    setCpf,
     setInitialPage,
   } = props;
-  const seatArray = [];
 
-  selectedSeats.forEach((seat, index) =>
-    seatArray.push(<p key={index}>Assento: {seat}</p>)
-  );
+  const seatArray = [];
+  const nameArray = [];
+  const cpfArray = [];
+  selectedSeats.forEach((seat, index) => {
+    seatArray[index] = <p key={index}>Assento: {seat}</p>;
+    nameArray[index] = (
+      <p key={index}>
+        Nome {index + 1}: {name[index]}
+      </p>
+    );
+    cpfArray[index] = (
+      <p key={index}>
+        CPF {index + 1}:{" "}
+        {cpf[index].slice(0, 3) +
+          "." +
+          cpf[index].slice(3, 6) +
+          "." +
+          cpf[index].slice(6, 9) +
+          "-" +
+          cpf[index].slice(9, 11)}
+      </p>
+    );
+  });
 
   const navigate = useNavigate();
 
   function goHome() {
     navigate("/");
     setSelectedSeats([]);
+    setName([]);
+    setCpf([]);
     setInitialPage(true);
   }
 
@@ -42,17 +65,8 @@ export default function SuccessScreen(props) {
       </div>
       <div data-identifier="buyer-infos-reserve-finished">
         <Title>Comprador</Title>
-        <p>Nome: {name}</p>
-        <p>
-          CPF:{" "}
-          {cpf.slice(0, 3) +
-            "." +
-            cpf.slice(3, 6) +
-            "." +
-            cpf.slice(6, 9) +
-            "-" +
-            cpf.slice(9, 11)}
-        </p>
+        {nameArray}
+        {cpfArray}
       </div>
       <button onClick={goHome} data-identifier="back-to-home-btn">
         Voltar para Home

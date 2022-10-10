@@ -6,6 +6,7 @@ import BottomBar from "./BottomBar";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserInfoForm from "./UserInfoForm";
+import SeatLabel from "./SeatLabel";
 
 export default function SeatsScreen(props) {
   const { idSession } = useParams();
@@ -42,7 +43,9 @@ export default function SeatsScreen(props) {
     setInitialPage(false);
     setSelected([]);
     setSelectedSeats([]);
-  }, [url, setInitialPage, setSelected, setSelectedSeats]);
+    setName([]);
+    setCpf([]);
+  }, [url, setInitialPage, setSelected, setSelectedSeats, setName, setCpf]);
 
   if (error) {
     return (
@@ -70,18 +73,36 @@ export default function SeatsScreen(props) {
       setSelected([...selected, seatId]);
       setSelectedSeats([...selectedSeats, seatName]);
     } else {
-      const newSelected = selected.filter((seat) => !(seat === seatId));
-      setSelected(newSelected);
-      const newSelectedSeats = selectedSeats.filter(
-        (seat) => !(seat === seatName)
-      );
-      setSelectedSeats(newSelectedSeats);
+      if (confimation(seatId)) {
+        const newSelected = selected.filter((seat) => !(seat === seatId));
+        setSelected(newSelected);
+        const newSelectedSeats = selectedSeats.filter(
+          (seat) => !(seat === seatName)
+        );
+        setSelectedSeats(newSelectedSeats);
+      }
+    }
+  }
+
+  function confimation(seatId) {
+    const index = selected.indexOf(seatId);
+    if (
+      (name[index] !== undefined && name[index] !== "") ||
+      (cpf[index] !== undefined && cpf[index] !== "")
+    ) {
+      if (window.confirm("Gostaria realmente de remover o assento?") === true) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
     }
   }
 
   return (
     <Body>
-      <p>Selecione o(s) assento(s)</p>
+      <Header>Selecione o(s) assento(s)</Header>
       <SeatMap>
         {seats.map((seat) => (
           <Seat
@@ -95,27 +116,7 @@ export default function SeatsScreen(props) {
           </Seat>
         ))}
       </SeatMap>
-      <SeatLabel>
-        <div>
-          <Seat
-            isSelected={true}
-            data-identifier="seat-selected-subtitle"
-          ></Seat>
-          <Seat
-            isAvailable={true}
-            data-identifier="seat-available-subtitle"
-          ></Seat>
-          <Seat
-            isAvailable={false}
-            data-identifier="seat-unavailable-subtitle"
-          ></Seat>
-        </div>
-        <span>
-          <p data-identifier="seat-selected-subtitle">Selecionado</p>
-          <p data-identifier="seat-available-subtitle">Disponível</p>
-          <p data-identifier="seat-unavailable-subtitle">Indisponível</p>
-        </span>
-      </SeatLabel>
+      <SeatLabel />
       <UserInfoForm
         selected={selected}
         name={name}
@@ -137,14 +138,14 @@ const Body = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
 
-  p {
-    font-family: "Roboto", sans-serif;
-    font-size: 24px;
-    color: #293845;
-    margin: 15px 0px 25px 0px;
-    text-align: center;
-  }
+const Header = styled.p`
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+  color: #293845;
+  margin: 15px 0px 25px 0px;
+  text-align: center;
 `;
 
 const SeatMap = styled.ul`
@@ -176,36 +177,5 @@ const Seat = styled.li`
 
   &:hover {
     cursor: pointer;
-  }
-`;
-
-const SeatLabel = styled(SeatMap)`
-  width: 300px;
-  justify-content: center;
-  padding: 0px;
-
-  div {
-    width: 300px;
-
-    display: flex;
-    justify-content: space-around;
-  }
-
-  span {
-    width: 268px;
-
-    display: flex;
-    justify-content: space-between;
-  }
-
-  p {
-    font-family: "Roboto", sans-serif;
-    font-size: 13px;
-    color: #4e5a65;
-    margin: 0px;
-  }
-
-  li {
-    margin-bottom: 0px;
   }
 `;
