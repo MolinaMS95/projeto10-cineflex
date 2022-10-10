@@ -65,13 +65,14 @@ export default function UserInfoForm(props) {
       ids: selected,
       compradores: buyers,
     };
-
-    const promise = axios.post(url, object);
-    promise.then(() => navigate("/sucess"));
-
-    promise.catch(() =>
-      alert("Estamos com dificuldades no momento, tente mais tarde")
-    );
+    if(selected.length !== 0){
+      const promise = axios.post(url, object);
+      promise.then(() => navigate("/sucess"));
+  
+      promise.catch(() =>
+        alert("Estamos com dificuldades no momento, tente mais tarde")
+      );
+    }
   }
 
   return (
