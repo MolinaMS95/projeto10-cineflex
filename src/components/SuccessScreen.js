@@ -2,8 +2,16 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function SuccessScreen(props) {
-  const { movie, day, hour, selectedSeats, setSelectedSeats, name, cpf } =
-    props;
+  const {
+    movie,
+    day,
+    hour,
+    selectedSeats,
+    setSelectedSeats,
+    name,
+    cpf,
+    setInitialPage,
+  } = props;
   const seatArray = [];
 
   selectedSeats.forEach((seat, index) =>
@@ -15,6 +23,7 @@ export default function SuccessScreen(props) {
   function goHome() {
     navigate("/");
     setSelectedSeats([]);
+    setInitialPage(true);
   }
 
   return (

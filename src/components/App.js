@@ -14,17 +14,18 @@ export default function App() {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [name, setName] = useState(undefined);
   const [cpf, setCpf] = useState(undefined);
+  const [initialPage, setInitialPage] = useState(true);
 
   return (
     <>
       <GlobalStyle />
-      <TopBar />
       <BrowserRouter>
-        <Routes>
+        <TopBar initialPage={initialPage} setInitialPage={setInitialPage}/>
+        <Routes >
           <Route path="/" element={<ChooseMovieScreen setMovie={setMovie} />} />
           <Route
             path="/sessions/:idFilm"
-            element={<MovieSessions setDay={setDay} setHour={setHour} />}
+            element={<MovieSessions setDay={setDay} setHour={setHour} setInitialPage={setInitialPage}/>}
           />
           <Route
             path="/seats/:idSession"
@@ -36,6 +37,7 @@ export default function App() {
                 setName={setName}
                 cpf={cpf}
                 setCpf={setCpf}
+                setInitialPage={setInitialPage}
               />
             }
           />
@@ -50,6 +52,7 @@ export default function App() {
                 setSelectedSeats={setSelectedSeats}
                 name={name}
                 cpf={cpf}
+                setInitialPage={setInitialPage}
               />
             }
           />

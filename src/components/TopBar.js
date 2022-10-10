@@ -1,7 +1,24 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function TopBar() {
-  return <Header>CINEFLEX</Header>;
+export default function TopBar({ initialPage, setInitialPage }) {
+  const navigate = useNavigate();
+
+  function goBack(){
+    setInitialPage(true);
+    navigate(-1);
+  }
+
+  return (
+    <Header>
+      {!initialPage && (
+        <button onClick={goBack}>
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </button>
+      )}
+      CINEFLEX
+    </Header>
+  );
 }
 
 const Header = styled.header`
@@ -22,4 +39,20 @@ const Header = styled.header`
   left: 0px;
   top: 0px;
   z-index: 2;
+
+  button {
+    position: absolute;
+    left: 0px;
+    top: 20px;
+    z-index: 1000;
+
+    border: none;
+    background: none;
+
+    font-size: 25px;
+  }
+
+  button:hover {
+    cursor: pointer;
+  }
 `;

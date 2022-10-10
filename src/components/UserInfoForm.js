@@ -19,6 +19,10 @@ export default function UserInfoForm(props) {
 
     const promise = axios.post(url, object);
     promise.then(() => navigate("/sucess"));
+    
+    promise.catch(() =>
+      alert("Estamos com dificuldades no momento, tente mais tarde")
+    );
   }
 
   return (

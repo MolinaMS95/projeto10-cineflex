@@ -11,7 +11,15 @@ export default function SeatsScreen(props) {
   const { idSession } = useParams();
   const url = `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSession}/seats`;
 
-  const { selectedSeats, setSelectedSeats, name, setName, cpf, setCpf } = props;
+  const {
+    selectedSeats,
+    setSelectedSeats,
+    name,
+    setName,
+    cpf,
+    setCpf,
+    setInitialPage,
+  } = props;
 
   const [seats, setSeats] = useState(null);
   const [error, setError] = useState(false);
@@ -30,7 +38,11 @@ export default function SeatsScreen(props) {
       alert("Não foi possível carregar os assentos para esta sessão");
       setError(true);
     });
-  }, [url]);
+
+    setInitialPage(false);
+    setSelected([]);
+    setSelectedSeats([]);
+  }, [url, setInitialPage, setSelected, setSelectedSeats]);
 
   if (error) {
     return (
